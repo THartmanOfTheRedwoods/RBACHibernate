@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.archive.autodetection">class,hbm</property>
+        <property name="hibernate.dialect">org.hibernate.community.dialect.SQLiteDialect</property>
+        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.connection.driver_class">org.sqlite.JDBC</property>
+        <property name="hibernate.connection.username">sa</property>
+        <property name="hibernate.connection.password">sa</property>
+        <!-- You will clearly need to change the connection url in a production environment -->
+        <property name="hibernate.connection.url">jdbc:sqlite:src/main/resources/edu/redwoods/rbachibernate/rbac.sqlite</property>
+        <!-- <property name="hibernate.hbm2ddl.auto">create</property> -->
+        <!-- <property name="hibernate.hbm2ddl.auto">validate</property> -->
+        <!-- <property name="hibernate.hbm2ddl.auto">create-drop</property> -->
+        <property name="hibernate.hbm2ddl.auto">update</property>
+        <mapping class="edu.redwoods.rbachibernate.User"></mapping>
+        <mapping class="edu.redwoods.rbachibernate.Role"></mapping>
+    </session-factory>
+</hibernate-configuration>
