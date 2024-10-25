@@ -18,5 +18,6 @@
         <property name="hibernate.hbm2ddl.auto">update</property>
         <mapping class="edu.redwoods.rbachibernate.User"></mapping>
         <mapping class="edu.redwoods.rbachibernate.Role"></mapping>
+        <mapping class="edu.redwoods.rbachibernate.Permission"></mapping>
     </session-factory>
 </hibernate-configuration>

@@ -45,11 +45,16 @@ public class User {
                     @JoinColumn(name = "role_id", referencedColumnName = "role_id",
                             nullable = false, updatable = false)})
     private Set<Role> roles = new HashSet<>();
+
     protected User() {}
 
-    public User(String username, String passwordHash) {
+    public User(String username, String password) {
         this.username = username;
-        this.passwordHash = passwordHash;
+        if( password != null) { this.setPasswordHash(password); }
+    }
+
+    public User(String username) {
+        this(username, null);
     }
 
     @Override
@@ -64,6 +69,10 @@ public class User {
 
     public String getUsername() {
         return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPasswordHash() {

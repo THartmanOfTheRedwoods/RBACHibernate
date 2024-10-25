@@ -1,13 +1,6 @@
 package edu.redwoods.rbachibernate;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.FetchType;
+import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.util.HashSet;
@@ -29,6 +22,18 @@ public class Role {
     @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
     // @ManyToMany(mappedBy = "roles", fetch = FetchType.EAGER) // Use if you have no Transaction Manager
     private Set<User> users = new HashSet<>();
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    // @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST) // Use if you have no Transaction Manager
+    @JoinTable(name = "rolepermlink",
+            joinColumns = {
+                    @JoinColumn(name = "role_id", referencedColumnName = "role_id",
+                            nullable = false, updatable = false)},
+            inverseJoinColumns = {
+                    @JoinColumn(name = "perm_id", referencedColumnName = "perm_id",
+                            nullable = false, updatable = false)})
+    private Set<Permission> permissions = new HashSet<>();
+
     protected Role() {
     }
 
@@ -45,6 +50,9 @@ public class Role {
     public String getName() {
         return name;
     }
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public Set<User> getUsers() {
         return users;
@@ -52,5 +60,13 @@ public class Role {
 
     public void setUsers(Set<User> users) {
         this.users = users;
+    }
+
+    public Set<Permission> getPermissions() {
+        return permissions;
+    }
+
+    public void setPermissions(Set<Permission> permissions) {
+        this.permissions = permissions;
     }
 }

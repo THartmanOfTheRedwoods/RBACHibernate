@@ -1,10 +1,29 @@
 package edu.redwoods.rbachibernate;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import edu.redwoods.rbachibernate.service.PermissionService;
+import edu.redwoods.rbachibernate.service.RoleService;
+import edu.redwoods.rbachibernate.service.UserService;
 import org.hibernate.Session;
 
 public class RbacHibernateApp {
     public static void main(String[] args) {
+        // Let me add a Permission
+        PermissionService ps = new PermissionService();
+        ps.insertPermission("CanReadBook");
+
+        List<String> perms = new ArrayList<>();
+        perms.add("CanReadBook");
+        RoleService rs = new RoleService();
+        rs.insertRoleWithPermissions("Reader", perms);
+
+        UserService us = new UserService();
+        us.insertUserWithRole("fanboy", null, "Reader");
+        us.insertUserWithRole("trevor", "08Energy!", "Reader");
+
+
         Session session = HibernateUtil.getSessionFactory().openSession();
         List<User> userList;
         /*
